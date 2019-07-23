@@ -1,6 +1,6 @@
 # NAPviewer 
 <p align="center">
-  <img src="https://github.com/computational-chemical-biology/" alt="NAP logo"/>
+  <img src="https://github.com/computational-chemical-biology/NAPviewer/blob/master/api/static/img/nap_logo.png?raw=true" alt="NAP logo"/>
 </p>
 
 NAPviewer is a web app to allow the exploration of NAP results. Please cite [PLoS Comput Biol 14(4): e1006089](https://doi.org/10.1371/journal.pcbi.1006089).
