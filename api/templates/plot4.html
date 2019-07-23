@@ -1,0 +1,54 @@
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!--// JQuery Reference, If you have added jQuery reference in your master page then ignore, 
+// else include this too with the below reference
+-->
+
+<script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
+<script>
+    $(document).ready(function() {
+	var d1 = '{{clustid | safe}}';
+	var d2 = '{{jobid | safe}}';
+	var arr = ['/NAPviewer/loadsubtable?clsid=', d1, '&jobid=', d2];
+	var res = arr.join('');
+	$('#subTable').DataTable( {
+	    "processing": true,
+	    "ajax": res,
+	    // add column definitions to map your json to the table
+	    "columns": [
+		{data: "Identifier"},
+		{data: "MonoisotopicMass"},
+		{data: "superclass_name"},
+		{data: "class_name"},
+		{data: "NoExplPeaks"},
+		{data: "MCSS"},
+		{data: "Score"},
+		{data: "Fusion"},
+		{data: "Consensus"}
+	    ]
+	} );
+    });
+</script>
+
+</head>
+
+    <table id="subTable" class="table table-striped" style="width:50%" >  
+	       <thead>  
+		<tr>
+		<th>Identifier</th>
+		<th>MonoisotopicMass</th>
+		<th>Superclass</th>
+		<th>Class</th>
+		<th>NoExplPeaks</th>
+		<th>MCSS</th>
+		<th>Score</th>
+		<th>Fusion</th>
+		<th>Consensus</th>
+	        </tr>
+	      </thead> 
+	      </table>  
+
+</html>

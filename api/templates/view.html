@@ -1,0 +1,110 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!--// JQuery Reference, If you have added jQuery reference in your master page then ignore, 
+// else include this too with the below reference
+-->
+
+<script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
+<script>
+    $(document).ready(function() {
+	var data = '{{jobid | safe}}';
+	var aj = "/NAPviewer/loadtable?jobid=";
+	var res = aj.concat(data);
+	$('#resTable').DataTable( {
+	    "processing": true,
+	    "ajax": res,
+	    // add column definitions to map your json to the table
+	    "columns": [
+		{data: "clusterindex"},
+		{data: "parentmass"},
+		{data: "RTMean"},
+		{data: "LibraryID"},
+		{data: "FusionID"},
+		{data: "ConsensusID"},
+		{data: "MetFragID"},
+		{data: "CompleteRes"}
+	    ]
+	} );
+    });
+</script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <a class="navbar-brand" href="">
+            <img src="static/img/nap_logo.png" alt="Logo" style="width:88px;height:48px;">
+        </a>
+
+      <!-- Links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/computational-chemical-biology" target="_blank">See on github</a>
+        </li>
+      </ul>
+    </nav>
+
+<div class="container">
+    <div class="row" >
+    <table id="resTable" class="table table-striped" style="width:100%" >  
+		<thead>  
+		  <tr>
+		<th>Cluster Index</th>
+		<th>Parent Mass</th>
+		<th>RT Mean</th>
+		<th>LibraryID</th>
+		<th>FusionID</th>
+		<th>ConsensusID</th>
+		<th>MetFragID</th>
+		<th>CompleteRes</th>
+	      </tr>
+	    </thead> 
+	      </table>  
+    </div>
+    <div class="row" style="height: 50%;">
+         <div class="col" id="targetColumn">
+	    <script>
+	    function showColumn1(type, score, strid, clsid, rjobid) {
+			var arr = ['/NAPviewer/plot2?type=', type, '&score=', score, '&strid=',  strid, '&clsid=', clsid, '&rjobid=', rjobid];
+			var urlcpar = arr.join('');
+			$.ajax({
+			  type: "GET",
+			  url: urlcpar,
+			  success: function(response) {
+			       $("#targetColumn").html(response);
+			  },
+			 });
+	    }
+	    </script>
+
+  	 </div>
+         <div class="col" id="place_for_plot2" >
+	    <script>
+	    function showColumn2(type, score, strid, clsid, rjobid) {
+			var arr = ['/NAPviewer/plot2?type=', type, '&score=', score, '&strid=',  strid, '&clsid=', clsid, '&rjobid=', rjobid];
+			var urlcpar = arr.join('');
+			$.ajax({
+			  type: "GET",
+			  url: urlcpar,
+			  success: function(response) {
+			       $("#place_for_plot2").html(response);
+			  },
+			  error: function(xhr) {
+			      //Do Something to handle error
+			  }
+			 });
+	    }
+	    </script>
+  	</div>
+    </div>
+</div>
+
+</body>
+</html>
