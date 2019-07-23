@@ -8,4 +8,4 @@ interactive:
 	docker run -it -p 5001:5001 --rm -v /tmp:/NAPviewer/api/static/downloads --name napviewer napviewer /NAPviewer/run_server.sh
 
 server:
-	docker run -it -p 5001:5001 --rm -v /tmp:/NAPviewer/api/static/downloads --name napviewer napviewer /NAPviewer/run_server.sh
+	docker run -itd -p 5001:5001 --rm -v /tmp:/NAPviewer/api/static/downloads --name napviewer napviewer /NAPviewer/run_server.sh
