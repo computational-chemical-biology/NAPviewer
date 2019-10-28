@@ -60,10 +60,13 @@ def plotPannel(tabgnps, idtab, clusterid, score, dr, nstruct=10):
 
     mols = [Chem.MolFromSmiles(x) for x in list(attr["SMILES"])]
     leg = []
-#score = 'Score'
+    #score = 'Score'
     for i in range(attr.shape[0]):
         cscore = str(round(float(attr[score][i]), 3))
-        leg.append(remove_accents(attr["Identifier"][i])+'-'+cscore)
+        identifier = attr["Identifier"][i]
+        if not identifier.replace('csid', '').isdigit():
+            identifier = re.sub('[^a-zA-Z0-9]', '', identifier)
+        leg.append(remove_accents(identifier)+'-'+cscore)
 
     img=Draw.MolsToGridImage(mols,molsPerRow=3,subImgSize=(200,200),legends=leg)
     img.save(filename)
