@@ -179,8 +179,8 @@ def formatsubtable(jobid, clustindex, mlist, tabgnps, lid):
     # have fusion/consensus
     if mtab.shape[0] < 4:
         mtab = pd.DataFrame(lid[pos])[['Identifier', 'MonoisotopicMass', 'NoExplPeaks', 'Score']]
-	
-    mtab = mtab.rename(columns = {'fusion2': 'Consensus', 'fusion': 'Fusion'}) 
+
+    mtab = mtab.rename(columns = {'fusion2': 'Consensus', 'fusion': 'Fusion'})
 
     if not 'Consensus' in mtab.columns:
         mtab['Consensus'] = ''
@@ -192,16 +192,26 @@ def formatsubtable(jobid, clustindex, mlist, tabgnps, lid):
         mtab['superclass_name'] = ''
     if not 'class_name' in mtab.columns:
         mtab['class_name'] = ''
+    if not 'class_name' in mtab.columns:
+        mtab['class_name'] = ''
+    if not 'Score' in mtab.columns:
+        mtab['Score'] =  pd.DataFrame(lid[pos])['Score']
+    if not 'Identifier' in mtab.columns:
+        mtab['Identifier'] =  pd.DataFrame(lid[pos])['Identifier']
+    if not 'MonoisotopicMass' in mtab.columns:
+        mtab['MonoisotopicMass'] =  pd.DataFrame(lid[pos])['MonoisotopicMass']
+    if not 'NoExplPeaks' in mtab.columns:
+        mtab['NoExplPeaks'] =  pd.DataFrame(lid[pos])['NoExplPeaks']
 
-    lcol = list(set(mtab['MCSS'])) 
+    lcol = list(set(mtab['MCSS']))
     if len(lcol)>1:
         col = get_N_HexCol(len(lcol))
-        dcol = dict(zip(lcol, col))	    
+        dcol = dict(zip(lcol, col))
 
-    rjobid = jobid[:5] 
+    rjobid = jobid[:5]
     for i in range(mtab.shape[0]):
         if mtab['NoExplPeaks'][i] != 0:
-            mtab.loc[i,'NoExplPeaks'] = ('<a href=\"javascript:showColumn2(\'F\', \'M\',\'' +  
+            mtab.loc[i,'NoExplPeaks'] = ('<a href=\"javascript:showColumn2(\'F\', \'M\',\'' +
                                         re.sub('\s+', '', mtab['Identifier'][i]) + '\', \''+ str(clustindex) + '\','+
 
                                         '\''+ rjobid + '\''+
@@ -211,12 +221,12 @@ def formatsubtable(jobid, clustindex, mlist, tabgnps, lid):
         mtab.loc[j,'Identifier'] = linkpattern(str(mtab.loc[j,'Identifier']))
         if str(mtab['MCSS'][j])!='':
             mtab.loc[j, 'MCSS'] = ('<span style=\"background-color:'+dcol[mtab.loc[j, 'MCSS']]+
-	                           '\"><font color="white">G'+str(mtab.loc[j, 'MCSS'])+'</font></span>'
-				   )
-    
-    meas = [mtab.iloc[i].to_dict() for i in range(mtab.shape[0])] 
+                          '\"><font color="white">G'+str(mtab.loc[j, 'MCSS'])+'</font></span>'
+                )
+
+    meas = [mtab.iloc[i].to_dict() for i in range(mtab.shape[0])]
     meas = {'data': meas}
-    return meas 
+    return meas
 
 
 
